@@ -20,7 +20,7 @@ class SearchResult {
     }
   
     render() {
-      if(typeof(this.data) == "string")
+      if(typeof(this.data) === "string")
         this.$searchResult.innerHTML = `<div class="loading">${this.data}</div>`;
       else {
         this.$searchResult.innerHTML = this.data

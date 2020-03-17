@@ -2,16 +2,19 @@ function Header({ $target }) {
   const $header = document.createElement("header");
   $header.className = "Header";
 
-  const $checkThemeform = document.createElement("form");
-  $checkThemeform.className = "checkThemeform";
+  const $checkThemelabel = document.createElement("label");
 
   const $checkThemeInput = document.createElement("input");
-  $checkThemeInput.className = "checkThemeInput";
   $checkThemeInput.type = "checkbox";
   $checkThemeInput.onclick = toggle;
-  $checkThemeform.appendChild($checkThemeInput);
 
-  $header.appendChild($checkThemeform);
+  const $checkThemeSpan = document.createElement("span");
+  $checkThemeSpan.classList.add("Slider");
+  $checkThemeSpan.classList.add("Round");
+
+  $checkThemelabel.appendChild($checkThemeInput);
+  $checkThemelabel.appendChild($checkThemeSpan);
+  $header.appendChild($checkThemelabel);
   $target.appendChild($header);
 
   checkTheme($checkThemeInput);

@@ -15,30 +15,30 @@ class App {
       $target,
       onSearch: async keyword => {
         try {
-          this.setState("Loading...");
+          this.setState("Loading...⏰");
           const { data } = await api.fetchCats(keyword);
-          if(data)
+
+          if(data && data.length > 0)
             this.setState(data);
-          else
-            this.setState("No Data. T^T")
+          else 
+            this.setState("No Data. T^T");
         } catch(e) {
           console.error(e);
-          this.setState("API 서버 Error. 잠시 후 다시 시도해주세요.")
+          this.setState("API 서버 Error. 잠시 후 다시 시도해주세요. |")
         }
       },
       onRandom: async ()=> {
         try{
-          this.setState("Loading...");
+          this.setState("Loading...⏰");
           const { data } = await api.fetchRandomCat();
-          console.log(data);
-          
-          if(data)
+
+          if(data && data.length > 0)
             this.setState(data);
-          else
+          else 
             this.setState("No Data. T^T")
         } catch(e) {
           console.error(e);
-          this.setState("API 서버 Error. 잠시 후 다시 시도해주세요.")
+          this.setState("API 서버 Error. 잠시 후 다시 시도해주세요. |")
         }
       }
     });
@@ -59,11 +59,13 @@ class App {
       onDetail: async id => {
         try{ 
           const { data } = await api.fetchCatDetail(id);
-          console.log(data);
           if(data)
             return data;
+          else
+            return "no data";
         } catch(e) {
           consle.error(e);
+          return "error";
         }
       },
       data: {

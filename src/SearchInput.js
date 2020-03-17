@@ -8,32 +8,39 @@ class SearchInput {
   onRandom = null;
 
   constructor({ $target, onSearch, onRandom }) {
-    const $searchInput = document.createElement("input");
-    
     this.$target = $target;
     this.onSearch = onSearch;
     this.onRandom = onRandom;
-    
-    this.$searchInput = $searchInput;
-    this.$searchInput.placeholder = "고양이를 검색해보세요.|";
 
-    $searchInput.className = "SearchInput";
-    $target.appendChild($searchInput);
+    const $search = document.createElement("div");
+    $search.className = "Search";
 
     const $randomButton = document.createElement("button");
-    $randomButton.className = "RandomButton";
+    $randomButton.innerHTML = "|";
     this.$randomButton = $randomButton;
-    this.$randomButton.innerHTML = "RANDOM";
-    $target.appendChild($randomButton);
+    $search.appendChild($randomButton);
+
+    const $searchInput = document.createElement("input");
+    // $searchInput.placeholder = "고양이를 검색해보세요.|";
+    $searchInput.placeholder = "Search";
+    this.$searchInput = $searchInput;
+    $search.appendChild($searchInput);
+    $target.appendChild($search);
 
     this.addEvent();
-    this.SearchKey();
+    this.recentSearch();
 
     console.log("SearchInput created.", this);
     this.render();
   }
+
   addEvent() {
     this.$searchInput.focus();
+
+    this.$searchInput.addEventListener("click", () => {
+      this.$searchInput.value = "";
+    });
+
     this.$searchInput.addEventListener("keyup", e => {
       if (e.keyCode === 13) {
         localStorage.setItem("key", this.$searchInput.value);
@@ -41,25 +48,17 @@ class SearchInput {
       }
     });
 
-    this.$searchInput.addEventListener("click", () => {
-      console.log('click');
-      this.$searchInput.value = "";
-    });
-
-
     this.$randomButton.addEventListener("click", () => {
-      console.log('click');
       this.onRandom();
     });
   }
 
-  SearchKey() {
+  recentSearch() {
     if(localStorage.getItem('key')) {
       const $searchValue = document.createElement("span");
-      $searchValue.innerHTML = localStorage.getItem('key');
-      // console.log(localStorage.getItem('key'));
-      // console.log($searchValue.text);
-      this.$target.appendChild($searchValue);
+      // $searchValue.innerHTML = localStorage.getItem('key');
+      // this.$target.appendChild($searchValue);
+      // TODO
     }
   }
 
