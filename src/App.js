@@ -6,6 +6,10 @@ class App {
 
   constructor($target) {
     this.$target = $target;
+    const saveData = localStorage.getItem("saveData");
+    if(saveData) {
+      this.data = JSON.parse(saveData);
+    }
 
     this.header = new Header({
       $target

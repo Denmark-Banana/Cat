@@ -39,5 +39,6 @@ class SearchResult {
           });
         });
       }
+      localStorage.setItem("saveData", JSON.stringify(this.data));
     }
   }

@@ -41,8 +41,7 @@ class SearchInput {
 
     this.addEvent();
 
-    console.log("SearchInput created.", this);
-    this.render();
+    //console.log("SearchInput created.", this);
   }
 
   addEvent() {
@@ -70,9 +69,7 @@ class SearchInput {
     });
   }
 
-  render() {}
 
-  
   /**
    * control cookie function
    */
