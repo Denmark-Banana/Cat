@@ -31,48 +31,18 @@ class SearchInput {
     const $recentSearch = document.createElement("ul");
     this.recentSearchArr.forEach(keyword => {
       const element = document.createElement("li");
+      element.className = "recentSearch";
       element.innerHTML = keyword;
       $recentSearch.appendChild(element);
-    })
+    });
     $search.appendChild($recentSearch);
-
 
     $target.appendChild($search);
 
     this.addEvent();
 
-    const allValue = this.getAllCookie();
-
     console.log("SearchInput created.", this);
     this.render();
-  }
-
-  setCookie(name, value, exp) {
-    const date = new Date();
-    date.setTime(date.getTime() + exp * 24 * 60 * 60 * 1000);
-    document.cookie =
-      name + "=" + value + ";expires=" + date.toUTCString() + ";path=/";
-    console.log(document.cookie);
-  }
-
-  deleteCookie = function(name) {
-    document.cookie = name + '=; expires=Thu, 01 Jan 1999 00:00:10 GMT;';
-  }
-  
-  getCookie(name) {
-    const value = document.cookie.match("(^|;) ?" + name + "=([^;]*)(;|$)");
-    return value ? value[2] : null;
-  }
-
-  getAllCookie() {
-    const allCookie = document.cookie;
-    const keywordArr = allCookie?.split('; ');
-    for(let idx = 1; idx < keywordArr.length; idx++) {
-      if(idx > 5)
-        return;
-      const valueArr = keywordArr[idx]?.split('=');
-      this.recentSearchArr.push(valueArr[0]);
-    }
   }
 
   addEvent() {
@@ -84,7 +54,6 @@ class SearchInput {
 
     this.$searchInput.addEventListener("keyup", e => {
       if (e.keyCode === 13) {
-        //localStorage.setItem("key", this.$searchInput.value);
         this.setCookie(this.$searchInput.value, this.$searchInput.value, 1);
         this.onSearch(e.target.value);
       }
@@ -93,7 +62,47 @@ class SearchInput {
     this.$randomButton.addEventListener("click", () => {
       this.onRandom();
     });
+
+    document.querySelectorAll(".recentSearch").forEach(element => {
+      element.addEventListener("click", () => {
+        this.onSearch(element.innerText);
+      });
+    });
   }
 
   render() {}
+
+  
+  /**
+   * control cookie function
+   */
+  setCookie(name, value, exp) {
+    const date = new Date();
+    date.setTime(date.getTime() + exp * 24 * 60 * 60 * 1000);
+    if (!this.getCookie(name)) {
+      document.cookie =
+        name + "=" + value + ";expires=" + date.toUTCString() + ";path=/";
+    }
+  }
+
+  deleteCookie = function(name) {
+    document.cookie = name + "=; expires=Thu, 01 Jan 1999 00:00:10 GMT;";
+  };
+
+  getCookie(name) {
+    const value = document.cookie.match("(^|;) ?" + name + "=([^;]*)(;|$)");
+    return value ? value[2] : null;
+  }
+
+  getAllCookie() {
+    const allCookie = document.cookie;
+    const keywordArr = allCookie?.split("; ").reverse();
+
+    this.recentSearchArr = keywordArr
+      .filter((_, idx) => idx < 5)
+      .map(keyword => {
+        const valueArr = keyword?.split("=");
+        return valueArr[0];
+      });
+  }
 }

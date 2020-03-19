@@ -120,7 +120,8 @@
     /* SearchInput */
   .Search {
     display: flex;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    position: relative;
   }
   .Search button {
     padding-left: 20px;
@@ -133,6 +134,18 @@
     width: 100%;
     font-size: 40px;
     padding: 10px 15px;
+  }
+  .Search ul {
+    padding: 0px;
+    position: absolute;
+    left: 100px;
+    top: 60px;
+  }
+  .Search ul li {
+    list-style-type : none;
+    float: left;
+    margin-right: 10px;
+    cursor: pointer;
   }
   
     /* ImageInfo */
