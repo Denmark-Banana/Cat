@@ -36,7 +36,10 @@ class ImageInfo {
       this.$imageInfo.style.display === "block" &&
       this.data.image.id === id
     ) {
-      this.data.image = fetchData;
+      if (fetchData === "error" || fetchData =="no data")
+        this.data.error = fetchData;
+      else        
+        this.data.image = fetchData;
       this.render();
     }
   }
@@ -75,6 +78,7 @@ class ImageInfo {
                 temperament ? temperament : "Loading 중입니다..."
               }</div>
               <div>태생: ${origin ? origin : "Loading 중입니다..."}</div>
+              <div>${this.data.error? this.data.error: ""}</div>
             </div>
           </div>`;
       this.$imageInfo.style.display = "block";

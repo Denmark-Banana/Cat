@@ -1,16 +1,21 @@
 class SearchResult {
     $searchResult = null;
+    $loadingElement = null;
     data = null;
     onClick = null;
   
     constructor({ $target, initialData, onClick }) {
+      this.data = initialData;
+      this.onClick = onClick;
+
+      this.$loadingElement = document.createElement("div");
+      this.$loadingElement.className = "loading";
+      $target.appendChild(this.$loadingElement);
+
       this.$searchResult = document.createElement("div");
       this.$searchResult.className = "SearchResult";
       $target.appendChild(this.$searchResult);
-  
-      this.data = initialData;
-      this.onClick = onClick;
-  
+      
       this.render();
     }
   
@@ -20,9 +25,12 @@ class SearchResult {
     }
   
     render() {
-      if(typeof(this.data) === "string")
-        this.$searchResult.innerHTML = `<div class="loading">${this.data}</div>`;
+      if(typeof(this.data) === "string") {
+        this.$searchResult.innerHTML = "";
+        this.$loadingElement.innerHTML = `<div class="loading">${this.data}</div>`;
+      }
       else {
+        this.$loadingElement.innerHTML = "";
         this.$searchResult.innerHTML = this.data
           .map(
             cat => `
