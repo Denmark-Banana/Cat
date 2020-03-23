@@ -76,10 +76,11 @@ class SearchInput {
   setCookie(name, value, exp) {
     const date = new Date();
     date.setTime(date.getTime() + exp * 24 * 60 * 60 * 1000);
-    if (!this.getCookie(name)) {
-      document.cookie =
-        name + "=" + value + ";expires=" + date.toUTCString() + ";path=/";
-    }
+    if(this.getCookie(name))
+      this.deleteCookie(name);
+ 
+    document.cookie =
+      name + "=" + value + ";expires=" + date.toUTCString() + ";path=/";
   }
 
   deleteCookie = function(name) {
@@ -93,10 +94,11 @@ class SearchInput {
 
   getAllCookie() {
     const allCookie = document.cookie;
+    console.log(allCookie);
     const keywordArr = allCookie?.split("; ").reverse();
 
     this.recentSearchArr = keywordArr
-      .filter((_, idx) => idx < 5)
+      .filter((_, idx) => (idx != keywordArr.length - 1) && (idx < 5))
       .map(keyword => {
         const valueArr = keyword?.split("=");
         return valueArr[0];
