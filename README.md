@@ -1,1 +1,1 @@
-Cat
+# Cat Project (with Vanilla JavaScript)
