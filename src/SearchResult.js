@@ -32,7 +32,6 @@ class SearchResult {
         entries,
         observer
       ) {
-        console.log("intersect New target");
         entries.forEach(function(entry) {
           //타겟 엘리먼트와 뷰포트가 교차한다면
           if (entry.isIntersecting) {
@@ -68,13 +67,16 @@ class SearchResult {
         )
         .join("");
 
-      this.$searchResult.querySelectorAll(".item").forEach(($item, index) => {
-        $item.addEventListener("click", () => {
-          this.onClick(this.data[index]);
-        });
+      this.$searchResult.addEventListener("click", e => {
+        const elemTarget = e.target;
+        if (elemTarget && elemTarget.src) {
+          this.data.map(img => {
+            if (img.url === elemTarget.src) this.onClick(img);
+          });
+        }
       });
+      localStorage.setItem("saveData", JSON.stringify(this.data));
     }
     this.addEvent();
-    localStorage.setItem("saveData", JSON.stringify(this.data));
   }
 }

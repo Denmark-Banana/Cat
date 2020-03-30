@@ -94,7 +94,6 @@ class SearchInput {
 
   getAllCookie() {
     const allCookie = document.cookie;
-    console.log(allCookie);
     const keywordArr = allCookie?.split("; ").reverse();
 
     this.recentSearchArr = keywordArr

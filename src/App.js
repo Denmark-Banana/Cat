@@ -68,7 +68,7 @@ class App {
           else
             return "no data";
         } catch(e) {
-          consle.error(e);
+          console.error(e);
           return "error";
         }
       },
